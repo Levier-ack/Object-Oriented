@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="httpcore5" />
+        <module name="httpcore5-h2" />
+        <module name="httpcore5-osgi" />
+        <module name="httpcore5-reactive" />
+        <module name="httpcore5-testing" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="httpcore5" target="1.7" />
+      <module name="httpcore5-h2" target="1.7" />
+      <module name="httpcore5-osgi" target="1.7" />
+      <module name="httpcore5-parent" target="1.7" />
+      <module name="httpcore5-reactive" target="1.7" />
+      <module name="httpcore5-testing" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
