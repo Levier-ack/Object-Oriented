@@ -40,7 +40,7 @@ import org.junit.Test;
  * Unit tests for {@link HttpHost}.
  *
  */
-public class TestHttpHost {
+public class testhttphost {
 
     @Test
     public void testConstructor() {
