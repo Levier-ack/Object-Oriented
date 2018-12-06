@@ -57,14 +57,14 @@ public class RequestConnControl implements HttpRequestInterceptor {
         Args.notNull(request, "HTTP request");
 
         final String method = request.getRequestLine().getMethod();
-        if (method.equalsIgnoreCase("CONNECT")) {
+        if ("CONNECT".equalsIgnoreCase(method)) {//字符串比较，忽略大小写，，判断是否已经连接
             return;
         }
 
         if (!request.containsHeader(HTTP.CONN_DIRECTIVE)) {
             // Default policy is to keep connection alive
             // whenever possible
-            request.addHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE);
+            request.addHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE);//添加连接头部，添加keppalive保持连接
         }
     }
 

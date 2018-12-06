@@ -124,7 +124,7 @@ public interface HttpEntity {
     /**
      * Returns a content stream of the entity.
      * {@link #isRepeatable Repeatable} entities are expected
-     * to create a new instance of {@link InputStream} for each invocation
+     * to create a new instance of {@link InputStream} for each invocation(调用)
      * of this method and therefore can be consumed multiple times.
      * Entities that are not {@link #isRepeatable repeatable} are expected
      * to return the same {@link InputStream} instance and therefore
@@ -158,7 +158,7 @@ public interface HttpEntity {
     void writeTo(OutputStream outStream) throws IOException;
 
     /**
-     * Tells whether this entity depends on an underlying stream.
+     * Tells whether this entity depends on an underlying stream.（底层）
      * Streamed entities that read data directly from the socket should
      * return {@code true}. Self-contained entities should return
      * {@code false}. Wrapping entities should delegate this call

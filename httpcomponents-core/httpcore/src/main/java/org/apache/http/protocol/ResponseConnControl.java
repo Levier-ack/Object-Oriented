@@ -73,21 +73,21 @@ public class ResponseConnControl implements HttpResponseInterceptor {
                 status == HttpStatus.SC_REQUEST_URI_TOO_LONG ||
                 status == HttpStatus.SC_SERVICE_UNAVAILABLE ||
                 status == HttpStatus.SC_NOT_IMPLEMENTED) {
-            response.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
+            response.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);//非正常答复下的断开连接
             return;
         }
         final Header explicit = response.getFirstHeader(HTTP.CONN_DIRECTIVE);
         if (explicit != null && HTTP.CONN_CLOSE.equalsIgnoreCase(explicit.getValue())) {
-            // Connection persistence explicitly disabled
+            // Connection persistence explicitly disabled不能长时间连接
             return;
         }
         // Always drop connection for HTTP/1.0 responses and below
-        // if the content body cannot be correctly delimited
+        // if the content body cannot be correctly delimited限制
         final HttpEntity entity = response.getEntity();
         if (entity != null) {
             final ProtocolVersion ver = response.getStatusLine().getProtocolVersion();
             if (entity.getContentLength() < 0 &&
-                    (!entity.isChunked() || ver.lessEquals(HttpVersion.HTTP_1_0))) {
+                    (!entity.isChunked() || ver.lessEquals(HttpVersion.HTTP_1_0))) {//强制关闭
                 response.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
                 return;
             }
@@ -97,9 +97,9 @@ public class ResponseConnControl implements HttpResponseInterceptor {
         if (request != null) {
             final Header header = request.getFirstHeader(HTTP.CONN_DIRECTIVE);
             if (header != null) {
-                response.setHeader(HTTP.CONN_DIRECTIVE, header.getValue());
+                response.setHeader(HTTP.CONN_DIRECTIVE, header.getValue());//客户端申请关闭
             } else if (request.getProtocolVersion().lessEquals(HttpVersion.HTTP_1_0)) {
-                response.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
+                response.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);//请求版本低
             }
         }
     }

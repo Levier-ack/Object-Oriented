@@ -124,9 +124,9 @@ public class ResponseContent implements HttpResponseInterceptor {
             }
         } else {
             final int status = response.getStatusLine().getStatusCode();
-            if (status != HttpStatus.SC_NO_CONTENT
-                    && status != HttpStatus.SC_NOT_MODIFIED
-                    && status != HttpStatus.SC_RESET_CONTENT) {
+            if (status != HttpStatus.SC_NO_CONTENT//204
+                    && status != HttpStatus.SC_NOT_MODIFIED//304
+                    && status != HttpStatus.SC_RESET_CONTENT) {//205
                 response.addHeader(HTTP.CONTENT_LEN, "0");
             }
         }

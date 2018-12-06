@@ -1,3 +1,11 @@
 ssl安全保护：https://www.cnblogs.com/tony-yang-flutter/p/3523983.html
 
 intelij idea符号：https://www.cnblogs.com/LDZZDL/p/9061603.html
+
+HTTP实体编码 ：https://www.cnblogs.com/xiaohuochai/p/6193614.html
+
+抽象类与接口：http://www.importnew.com/12399.html
+
+内容编码格式：https://blog.csdn.net/u014569188/article/details/78912446
+
+HTTP KEEP_ALIVE模式：https://blog.csdn.net/charleslei/article/details/50621912

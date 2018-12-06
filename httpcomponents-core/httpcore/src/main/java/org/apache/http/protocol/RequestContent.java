@@ -85,13 +85,13 @@ public class RequestContent implements HttpRequestInterceptor {
     public void process(final HttpRequest request, final HttpContext context)
             throws HttpException, IOException {
         Args.notNull(request, "HTTP request");
-        if (request instanceof HttpEntityEnclosingRequest) {
+        if (request instanceof HttpEntityEnclosingRequest) { //是否是右边类的实例，是否可以修改实体
             if (this.overwrite) {
-                request.removeHeaders(HTTP.TRANSFER_ENCODING);
-                request.removeHeaders(HTTP.CONTENT_LEN);
+                request.removeHeaders(HTTP.TRANSFER_ENCODING);//移除分块编码
+                request.removeHeaders(HTTP.CONTENT_LEN);//移除内容长度
             } else {
                 if (request.containsHeader(HTTP.TRANSFER_ENCODING)) {
-                    throw new ProtocolException("Transfer-encoding header already present");
+                    throw new ProtocolException("Transfer-encoding header already present");//不可重写则跳转到错误处理
                 }
                 if (request.containsHeader(HTTP.CONTENT_LEN)) {
                     throw new ProtocolException("Content-Length header already present");
@@ -100,28 +100,28 @@ public class RequestContent implements HttpRequestInterceptor {
             final ProtocolVersion ver = request.getRequestLine().getProtocolVersion();
             final HttpEntity entity = ((HttpEntityEnclosingRequest)request).getEntity();
             if (entity == null) {
-                request.addHeader(HTTP.CONTENT_LEN, "0");
+                request.addHeader(HTTP.CONTENT_LEN, "0");//长度为0
                 return;
             }
             // Must specify a transfer encoding or a content length
             if (entity.isChunked() || entity.getContentLength() < 0) {
                 if (ver.lessEquals(HttpVersion.HTTP_1_0)) {
                     throw new ProtocolException(
-                            "Chunked transfer encoding not allowed for " + ver);
+                            "Chunked transfer encoding not allowed for " + ver);//过低协议版本
                 }
-                request.addHeader(HTTP.TRANSFER_ENCODING, HTTP.CHUNK_CODING);
+                request.addHeader(HTTP.TRANSFER_ENCODING, HTTP.CHUNK_CODING);//添加分块编写传输
             } else {
-                request.addHeader(HTTP.CONTENT_LEN, Long.toString(entity.getContentLength()));
+                request.addHeader(HTTP.CONTENT_LEN, Long.toString(entity.getContentLength()));//添加内容长度
             }
             // Specify a content type if known
             if (entity.getContentType() != null && !request.containsHeader(
                     HTTP.CONTENT_TYPE )) {
-                request.addHeader(entity.getContentType());
+                request.addHeader(entity.getContentType());//添加类型
             }
             // Specify a content encoding if known
             if (entity.getContentEncoding() != null && !request.containsHeader(
                     HTTP.CONTENT_ENCODING)) {
-                request.addHeader(entity.getContentEncoding());
+                request.addHeader(entity.getContentEncoding());//添加内容编码格式：内容编码格式gzip和deflate
             }
         }
     }

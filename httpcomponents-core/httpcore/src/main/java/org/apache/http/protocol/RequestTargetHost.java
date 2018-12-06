@@ -73,7 +73,7 @@ public class RequestTargetHost implements HttpRequestInterceptor {
             HttpHost targetHost = coreContext.getTargetHost();
             if (targetHost == null) {
                 final HttpConnection conn = coreContext.getConnection();
-                if (conn instanceof HttpInetConnection) {
+                if (conn instanceof HttpInetConnection) {//根据主机地址等填充context
                     // Populate the context with a default HTTP host based on the
                     // inet address of the target host
                     final InetAddress address = ((HttpInetConnection) conn).getRemoteAddress();

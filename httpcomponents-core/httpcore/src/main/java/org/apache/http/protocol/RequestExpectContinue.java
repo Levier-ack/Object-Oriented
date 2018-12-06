@@ -76,15 +76,15 @@ public class RequestExpectContinue implements HttpRequestInterceptor {
         Args.notNull(request, "HTTP request");
 
         if (!request.containsHeader(HTTP.EXPECT_DIRECTIVE)) {
-            if (request instanceof HttpEntityEnclosingRequest) {
+            if (request instanceof HttpEntityEnclosingRequest) {//带有实体的请求
                 final ProtocolVersion ver = request.getRequestLine().getProtocolVersion();
-                final HttpEntity entity = ((HttpEntityEnclosingRequest)request).getEntity();
+                final HttpEntity entity = ((HttpEntityEnclosingRequest)request).getEntity();//类型转换
                 // Do not send the expect header if request body is known to be empty
                 if (entity != null
                         && entity.getContentLength() != 0 && !ver.lessEquals(HttpVersion.HTTP_1_0)) {
                     final boolean active = request.getParams().getBooleanParameter(
                             CoreProtocolPNames.USE_EXPECT_CONTINUE, this.activeByDefault);
-                    if (active) {
+                    if (active) {//判断是否使用expect-continue
                         request.addHeader(HTTP.EXPECT_DIRECTIVE, HTTP.EXPECT_CONTINUE);
                     }
                 }
